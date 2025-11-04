@@ -1,0 +1,229 @@
+/* Reset e font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #0c0c10;
+    /* fundo escuro uniforme */
+    color: #fff;
+    /* texto claro para contraste */
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #0b0b0e 0%, #1a1a22 100%);
+    border-bottom: 3px solid #fcb713;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 70px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 4px 15px rgba(252, 183, 19, 0.15);
+}
+
+header img {
+    width: 160px;
+    transition: transform 0.4s ease;
+}
+
+header img:hover {
+    transform: scale(1.05);
+}
+
+nav a {
+    color: #fcb713;
+    text-decoration: none;
+    margin-left: 30px;
+    font-weight: 500;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+nav a:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #fcb713;
+}
+
+/* Hero */
+.hero {
+    background-image: url('555.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    background-attachment: fixed;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 850px;
+}
+
+.hero h1 {
+    font-size: 3.3rem;
+    color: #fcb713;
+    text-shadow: 0 0 15px rgba(252, 183, 19, 0.4);
+}
+
+.hero span {
+    color: #ffffff;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-top: 25px;
+    color: #ddd;
+    line-height: 1.6;
+}
+
+/* Seções */
+section {
+    padding: 90px 10%;
+    transition: background 0.3s ease;
+}
+
+.sobre,
+.tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
+}
+
+/* Imagens */
+.sobre img, 
+#tecnologia img, 
+#proposito img, 
+#case img, 
+#como-fazemos img {
+    width: 420px;
+    border-radius: 14px;
+    border: 2px solid #fcb713;
+    box-shadow: 0 0 20px rgba(252, 183, 19, 0.25);
+    transition: none; /* desativa animação de hover */
+}
+.sobre img:hover,
+#tecnologia img:hover,
+#proposito img:hover,
+#case img:hover,
+#como-fazemos img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(252, 183, 19, 0.5);
+}
+
+/* Textos */
+.sobre-texto h2,
+#tecnologia h2,
+#proposito h2,
+#case h2,
+#como-fazemos h2 {
+    color: #fcb713;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(252, 183, 19, 0.4);
+}
+
+.sobre-texto p,
+#tecnologia p,
+#proposito p,
+#case p,
+#como-fazemos p {
+    color: #ccc;
+    line-height: 1.9;
+    font-size: 1.05rem;
+}
+
+/* Robôs */
+#robos .robos-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+#robos .robos-grid div {
+    background: rgba(252, 183, 19, 0.08);
+    padding: 20px;
+    border-radius: 14px;
+    text-align: center;
+    border: 1px solid rgba(252, 183, 19, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+#robos .robos-grid div:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 25px rgba(252, 183, 19, 0.3);
+}
+
+#robos .robos-grid img {
+    width: 210px;
+    border: none;
+}
+
+/* Footer */
+footer {
+    background: #0c0c10;
+    border-top: 2px solid #fcb713;
+    padding: 40px;
+    text-align: center;
+    color: #aaa;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    box-shadow: 0 -4px 20px rgba(252, 183, 19, 0.15);
+}
+
+/* Fade scroll animation */
+.fade-scroll {
+    transform: translateY(50px);
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+
+.aparece {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Keyframes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

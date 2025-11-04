@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataWake - Indústria 5.0 Inteligente e Humana</title>
+    <meta name="description" content="Sistema de portaria acessível com LIBRAS, QR Code, alto contraste e integração total. Evoluímos a indústria com máquinas, pessoas e inteligência.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #fcb713;
+            --primary-hover: #ffd84e;
+            --secondary: #ff8c00;
+            --bg-dark: #0a0a0d;
+            --bg-card: #1a1a22;
+            --text: #f5f5f5;
+            --text-light: #bbbbbb;
+            --text-muted: #888;
+            --success: #4CAF50;
+            --danger: #e74c3c;
+            --gradient: linear-gradient(135deg, #fcb713, #ff8c00);
+            --focus: #ffd84e;
+            --radius: 20px;
+            --shadow: 0 20px 50px rgba(0,0,0,0.4);
+        }
+
+        [data-theme="high-contrast"] {
+            --bg-dark: #000;
+            --bg-card: #111;
+            --text: #fff;
+            --text-light: #ff0;
+            --primary: #ff0;
+            --secondary: #ff0;
+            --focus: #ff0;
+            --text-muted: #ff0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* FOCO VISÍVEL */
+        a:focus, button:focus, [tabindex]:focus, input:focus, select:focus {
+            outline: 3px solid var(--focus);
+            outline-offset: 3px;
+        }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 13, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(252, 183, 19, 0.2);
+            padding: 18px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.4s ease;
+        }
+
+        header.scrolled {
+            padding: 12px 5%;
+            background: rgba(10, 10, 13, 0.98);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .logo a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo img {
+            width: 50px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover, nav a:focus, nav a.active {
+            color: var(--primary);
+        }
+
+        nav a:hover::after, nav a.active::after {
+            width: 100%;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .user-avatar {
+            width: 42px;
+            height: 42px;
+            background: var(--gradient);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(252, 183, 19, 0.3);
+        }
+
+        .btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn:hover, .btn:focus {
+            background: var(--primary);
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(252, 183, 19, 0.4);
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: #000;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(252, 183, 19, 0.5);
+        }
+
+        /* HERO */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('images/555.jpg') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, rgba(252,183,19,0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1100px;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: #eee;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 120px 5%;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 80px;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 100px;
+            height: 4px;
+            background: var(--gradient);
+            display: block;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        /* PROPÓSITO */
+        .proposito {
+            background: var(--bg-card);
+            clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+            padding: 160px 5% 140px;
+            margin-top: -80px;
+        }
+
+        .proposito-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .proposito p {
+            font-size: 1.35rem;
+            margin-bottom: 24px;
+            color: var(--text-light);
+        }
+
+        .proposito p strong {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* CASE */
+        .case {
+            background: linear-gradient(135deg, #111 0%, #1a1a22 100%);
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .case-text h3 {
+            font-size: 2.6rem;
+            margin-bottom: 24px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .case-text p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .case-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(252,183,19,0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(252,183,19,0.2);
+        }
+
+        .stat-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 8px;
+        }
+
+        .case-img {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .case-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .case-img:hover img {
+            transform: scale(1.05);
+        }
+
+        /* NÍVEIS */
+        .niveis {
+            background: #0f0f14;
+        }
+
+        .niveis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .nivel-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(252,183,19,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nivel-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+
+        .nivel-card:hover::before, .nivel-card:focus-within::before {
+            transform: scaleX(1);
+        }
+
+        .nivel-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .nivel-num {
+            width: 70px; height: 70px;
+            background: var(--gradient);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.8rem;
+            margin: 0 auto 24px;
+            box-shadow: 0 8px 20px rgba(252,183,19,0.4);
+        }
+
+        .nivel-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        /* ROBÔS */
+        .robo-section {
+            background: linear-gradient(to bottom, #0a0a0d, #111);
+        }
+
+        .robo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .robo-card {
+            background: var(--bg-card);
+            padding: 50px 30px;
+            border-radius: 28px;
+            text-align: center;
+            transition: all 0.5s ease;
+            border: 1px solid rgba(252,183,19,0.1);
+            position: relative;
+        }
+
+        .robo-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient);
+            opacity: 0;
+            border-radius: 28px;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+
+        .robo-card:hover::after {
+            opacity: 0.1;
+        }
+
+        .robo-card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 30px 60px rgba(252,183,19,0.3);
+        }
+
+        .robo-icon {
+            width: 100px; height: 100px;
+            background: var(--gradient);
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 2.2rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(252,183,19,0.4);
+        }
+
+        .robo-card h4 {
+            font-size: 1.6rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        /* CTA FINAL */
+        .cta-final {
+            background: var(--gradient);
+            color: #000;
+            text-align: center;
+            padding: 120px 5%;
+            clip-path: polygon(0 10%, 100% 0, 100% 90%, 0 100%);
+        }
+
+        .cta-final h2 {
+            font-size: 3.2rem;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .cta-final p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-weight: 500;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #0a0a0d;
+            padding: 80px 5% 40px;
+            text-align: center;
+            border-top: 1px solid #222;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* TOAST */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success);
+            color: #000;
+            padding: 16px 28px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+
+        #toast.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-10px);
+        }
+
+        
+
+
+        /* RESPONSIVO */
+        @media (max-width: 992px) {
+            .hero-title { font-size: 3.5rem; }
+            .case-grid { grid-template-columns: 1fr; }
+            .case-img { order: -1; }
+            .section-title { font-size: 2.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtitle { font-size: 1.2rem; }
+            nav { display: none; }
+            .mobile-menu { display: block; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .niveis-grid, .robo-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            <a href="#home" aria-label="DataWake - Início">
+                <img src="images/DTW.png" alt="">
+                <span>DataWake</span>
+            </a>
+        </div>
+        <nav aria-label="Menu principal">
+            <a href="#home" class="active">Início</a>
+            <a href="#proposito">Propósito</a>
+            <a href="#case">Case</a>
+            <a href="#niveis">Níveis</a>
+            <a href="#robo">Robôs</a>
+            <a href="dashboard.html">Dashboard</a>
+        </nav>
+        <div class="user-info" aria-label="Usuário logado">
+            <div class="user-avatar" id="user-avatar">U</div>
+            <span id="user-email">carregando...</span>
+        </div>
+        <button class="btn" id="toggle-contrast" aria-label="Alternar alto contraste">
+            Alto Contraste
+        </button>
+        <button class="btn" id="logout-btn" onclick="logout()" aria-label="Sair do sistema">
+            Sair
+        </button>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-up">
+            <h1 class="hero-title">Indústria 5.0</h1>
+            <p class="hero-subtitle">Onde máquinas, inteligência artificial e pessoas colaboram em perfeita simbiose para resultados extraordinários.</p>
+            <div class="hero-cta">
+                <button class="btn btn-primary" onclick="irParaDashboard()">
+                    Acessar Sistema
+                </button>
+                <button class="btn" onclick="mostrarToast('Vídeo em breve!', 'success')">
+                    Ver Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROPÓSITO -->
+    <section class="proposito" id="proposito">
+        <div class="container">
+            <div class="proposito-content" data-aos="fade-up">
+                <h2 class="section-title">Nosso Propósito</h2>
+                <p><strong>Evoluir a indústria brasileira digitalmente</strong> valorizando o melhor de um sistema autônomo inteligente em conjunto com as máquinas existentes e o que as pessoas têm de melhor.</p>
+                <p>Esta simbiose, também chamada de <strong>Indústria 5.0</strong>, entre máquinas, sistema autônomo e pessoas, gera resultados extraordinários, sustentáveis e humanos.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE -->
+    <section class="case" id="case">
+        <div class="container">
+            <div class="case-grid">
+                <div class="case-text" data-aos="fade-right">
+                    <h3>Case de Sucesso Real</h3>
+                    <p>Em uma indústria metalúrgica de médio porte, implementamos a Tríade de Robôs e alcançamos:</p>
+                    <div class="case-stats">
+                        <div class="stat">
+                            <div class="stat-num">+42%</div>
+                            <div class="stat-label">Produtividade</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-num">-38%</div>
+                            <div class="stat-label">Desperdício</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-num">100%</div>
+                            <div class="stat-label">Colaboração</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-num">24/7</div>
+                            <div class="stat-label">Monitoramento</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="case-img" data-aos="fade-left">
+                    <img src="images/222.webp" alt="Fábrica com robôs e pessoas trabalhando juntos">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NÍVEIS -->
+    <section class="niveis" id="niveis">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">Evolução em 4 Níveis</h2>
+            <div class="niveis-grid">
+                <div class="nivel-card" data-aos="fade-up" data-aos-delay="100" tabindex="0">
+                    <div class="nivel-num">1</div>
+                    <h4>B.I. Monitoramento Integrado</h4>
+                    <p>Coleta autônoma de dados em tempo real de todas as máquinas e sistemas.</p>
+                </div>
+                <div class="nivel-card" data-aos="fade-up" data-aos-delay="200" tabindex="0">
+                    <div class="nivel-num">2</div>
+                    <h4>Algoritmo Simples</h4>
+                    <p>Identifica melhorias em uma grandeza e padroniza a produção futura.</p>
+                </div>
+                <div class="nivel-card" data-aos="fade-up" data-aos-delay="300" tabindex="0">
+                    <div class="nivel-num">3</div>
+                    <h4>Algoritmo Complexo</h4>
+                    <p>Correlaciona múltiplas variáveis e orienta equipes em tempo real.</p>
+                </div>
+                <div class="nivel-card" data-aos="fade-up" data-aos-delay="400" tabindex="0">
+                    <div class="nivel-num">4</div>
+                    <h4>Machine Learning</h4>
+                    <p>Adapta autonomamente o processo para maximizar resultados 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROBÔS -->
+    <section class="robo-section" id="robo">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">A Tríade de Robôs</h2>
+            <p style="text-align:center; max-width:900px; margin:0 auto 60px; color:var(--text-light);" data-aos="fade-up">
+                Três robôs simbólicos que representam o sistema completo em ação.
+            </p>
+            <div class="robo-grid">
+                <div class="robo-card" data-aos="zoom-in" data-aos-delay="100" tabindex="0">
+                    <div class="robo-icon">Ex.T</div>
+                    <h4>Robô Extrator</h4>
+                    <p>Extração contínua de dados de ERP, sensores e máquinas. Nunca para.</p>
+                </div>
+                <div class="robo-card" data-aos="zoom-in" data-aos-delay="200" tabindex="0">
+                    <div class="robo-icon">In.T</div>
+                    <h4>Robô Inteligente</h4>
+                    <p>Analisa padrões com IA. Orienta pessoas e comanda o Ac.T.</p>
+                </div>
+                <div class="robo-card" data-aos="zoom-in" data-aos-delay="300" tabindex="0">
+                    <div class="robo-icon">Ac.T</div>
+                    <h4>Robô de Ação</h4>
+                    <p>Executa ajustes em tempo real. Máxima eficiência garantida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="cta-final">
+        <div class="container" data-aos="fade-up">
+            <h2>Transforme Sua Indústria Hoje</h2>
+            <p>Acesse o sistema de portaria acessível com LIBRAS, QR Code e alto contraste.</p>
+            <button class="btn btn-primary" style="font-size:1.2rem; padding:16px 40px;" onclick="irParaDashboard()">
+                Acessar Dashboard
+            </button>
+        </div>
+    </section>
+
+    <!-- TOAST -->
+    <div id="toast" role="alert" aria-live="assertive">
+        <span id="toast-message">Mensagem</span>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="#home">Início</a>
+            <a href="#proposito">Propósito</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#">Suporte</a>
+            <a href="#">Documentação</a>
+        </div>
+        <p>© 2025 DataWake - Indústria 5.0 Inteligente, Humana e Acessível</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="script.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+
+        // Header scroll
+        window.addEventListener('scroll', () => {
+            document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Ativar link ativo
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
+
+        // Usuário
+        document.addEventListener("DOMContentLoaded", () => {
+            const email = usuarioLogado();
+            if (email) {
+                document.getElementById("user-email").textContent = email;
+                document.getElementById("user-avatar").textContent = email[0].toUpperCase();
+            }
+
+            // Contraste
+            const toggle = document.getElementById("toggle-contrast");
+            toggle.addEventListener("click", () => {
+                const isHigh = document.body.getAttribute("data-theme") === "high-contrast";
+                document.body.setAttribute("data-theme", isHigh ? "" : "high-contrast");
+                localStorage.setItem("theme", isHigh ? "normal" : "high-contrast");
+                falar(isHigh ? "Modo normal ativado" : "Alto contraste ativado");
+            });
+
+            if (localStorage.getItem("theme") === "high-contrast") {
+                document.body.setAttribute("data-theme", "high-contrast");
+            }
+        });
+
+        function mostrarToast(msg, type = "success") {
+            const toast = document.getElementById("toast");
+            document.getElementById("toast-message").textContent = msg;
+            toast.className = type;
+            toast.classList.add("show");
+            falar(msg);
+            setTimeout(() => toast.classList.remove("show"), 3000);
+        }
+
+        function falar(texto) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(texto);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.9;
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function irParaDashboard() {
+            mostrarToast("Redirecionando para o Dashboard...");
+            setTimeout(() => window.location.href = "dashboard.html", 1500);
+        }
+
+        
+
+    </script>
+</body>
+
+</html>
