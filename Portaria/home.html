@@ -5,10 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataWake - Indústria 5.0 Inteligente e Humana</title>
-    <meta name="description" content="Sistema de portaria acessível com LIBRAS, QR Code, alto contraste e integração total. Evoluímos a indústria com máquinas, pessoas e inteligência.">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="Sistema de portaria acessível com LIBRAS, QR Code, alto contraste e integração total. Evoluímos a indústria com máquinas, pessoas e inteligência.">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- VLibras -->
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+
     <style>
         :root {
             --primary: #fcb713;
@@ -24,7 +30,8 @@
             --gradient: linear-gradient(135deg, #fcb713, #ff8c00);
             --focus: #ffd84e;
             --radius: 20px;
-            --shadow: 0 20px 50px rgba(0,0,0,0.4);
+            --shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            --base-font-size: 16px;
         }
 
         [data-theme="high-contrast"] {
@@ -38,10 +45,30 @@
             --text-muted: #ff0;
         }
 
-        * {
+        /* FILTROS DE DALTONISMO */
+        [data-colorblind="protanopia"] {
+            filter: hue-rotate(-40deg) contrast(1.3) saturate(1.8);
+        }
+
+        [data-colorblind="deuteranopia"] {
+            filter: hue-rotate(180deg) contrast(1.2) saturate(1.5);
+        }
+
+        [data-colorblind="tritanopia"] {
+            filter: hue-rotate(90deg) contrast(1.4) saturate(2);
+        }
+
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            font-size: var(--base-font-size);
+            scroll-behavior: smooth;
         }
 
         body {
@@ -50,6 +77,7 @@
             font-family: 'Poppins', sans-serif;
             line-height: 1.8;
             overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
         }
 
         .sr-only {
@@ -59,13 +87,16 @@
             padding: 0;
             margin: -1px;
             overflow: hidden;
-            clip: rect(0,0,0,0);
+            clip: rect(0, 0, 0, 0);
             white-space: nowrap;
             border: 0;
         }
 
-        /* FOCO VISÍVEL */
-        a:focus, button:focus, [tabindex]:focus, input:focus, select:focus {
+        a:focus,
+        button:focus,
+        [tabindex]:focus,
+        input:focus,
+        select:focus {
             outline: 3px solid var(--focus);
             outline-offset: 3px;
         }
@@ -90,7 +121,7 @@
         header.scrolled {
             padding: 12px 5%;
             background: rgba(10, 10, 13, 0.98);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
 
         .logo a {
@@ -105,7 +136,7 @@
 
         .logo img {
             width: 50px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
         }
 
         nav {
@@ -134,11 +165,14 @@
             transition: width 0.3s ease;
         }
 
-        nav a:hover, nav a:focus, nav a.active {
+        nav a:hover,
+        nav a:focus,
+        nav a.active {
             color: var(--primary);
         }
 
-        nav a:hover::after, nav a.active::after {
+        nav a:hover::after,
+        nav a.active::after {
             width: 100%;
         }
 
@@ -178,7 +212,8 @@
             gap: 8px;
         }
 
-        .btn:hover, .btn:focus {
+        .btn:hover,
+        .btn:focus {
             background: var(--primary);
             color: #000;
             transform: translateY(-3px);
@@ -199,7 +234,7 @@
         /* HERO */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('images/555.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('images/555.jpg') center/cover no-repeat;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -211,8 +246,11 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, rgba(252,183,19,0.1) 0%, transparent 70%);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(252, 183, 19, 0.1) 0%, transparent 70%);
             z-index: 1;
         }
 
@@ -231,7 +269,7 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             line-height: 1.1;
         }
 
@@ -343,9 +381,9 @@
         .stat {
             text-align: center;
             padding: 20px;
-            background: rgba(252,183,19,0.1);
+            background: rgba(252, 183, 19, 0.1);
             border-radius: 16px;
-            border: 1px solid rgba(252,183,19,0.2);
+            border: 1px solid rgba(252, 183, 19, 0.2);
         }
 
         .stat-num {
@@ -394,7 +432,7 @@
             border-radius: var(--radius);
             text-align: center;
             transition: all 0.5s ease;
-            border: 1px solid rgba(252,183,19,0.1);
+            border: 1px solid rgba(252, 183, 19, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -402,15 +440,18 @@
         .nivel-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 5px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
             background: var(--gradient);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 0.5s ease;
         }
 
-        .nivel-card:hover::before, .nivel-card:focus-within::before {
+        .nivel-card:hover::before,
+        .nivel-card:focus-within::before {
             transform: scaleX(1);
         }
 
@@ -421,7 +462,8 @@
         }
 
         .nivel-num {
-            width: 70px; height: 70px;
+            width: 70px;
+            height: 70px;
             background: var(--gradient);
             color: #000;
             border-radius: 50%;
@@ -431,7 +473,7 @@
             font-weight: 800;
             font-size: 1.8rem;
             margin: 0 auto 24px;
-            box-shadow: 0 8px 20px rgba(252,183,19,0.4);
+            box-shadow: 0 8px 20px rgba(252, 183, 19, 0.4);
         }
 
         .nivel-card h4 {
@@ -458,7 +500,7 @@
             border-radius: 28px;
             text-align: center;
             transition: all 0.5s ease;
-            border: 1px solid rgba(252,183,19,0.1);
+            border: 1px solid rgba(252, 183, 19, 0.1);
             position: relative;
         }
 
@@ -479,11 +521,12 @@
 
         .robo-card:hover {
             transform: translateY(-20px);
-            box-shadow: 0 30px 60px rgba(252,183,19,0.3);
+            box-shadow: 0 30px 60px rgba(252, 183, 19, 0.3);
         }
 
         .robo-icon {
-            width: 100px; height: 100px;
+            width: 100px;
+            height: 100px;
             background: var(--gradient);
             color: #000;
             border-radius: 50%;
@@ -493,7 +536,7 @@
             margin: 0 auto 30px;
             font-size: 2.2rem;
             font-weight: 800;
-            box-shadow: 0 10px 30px rgba(252,183,19,0.4);
+            box-shadow: 0 10px 30px rgba(252, 183, 19, 0.4);
         }
 
         .robo-card h4 {
@@ -564,7 +607,7 @@
             align-items: center;
             gap: 12px;
             font-weight: 600;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
@@ -577,24 +620,193 @@
             transform: translateX(-50%) translateY(-10px);
         }
 
-        
+        /* MENU DE ACESSIBILIDADE - VERSÃO FINAL */
+        .accessibility-menu {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+        }
 
+        .btn-accessibility {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: #000;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            animation: pulse 2s infinite;
+        }
+
+        .btn-accessibility:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 30px rgba(252, 183, 19, 0.5);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(252, 183, 19, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(252, 183, 19, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(252, 183, 19, 0);
+            }
+        }
+
+        .accessibility-panel {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid rgba(252, 183, 19, 0.3);
+            border-radius: 20px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-width: 290px;
+            max-width: 310px;
+            box-shadow: var(--shadow);
+            transform: translateY(15px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.35s ease;
+            pointer-events: none;
+            font-size: 0.94rem;
+        }
+
+        .accessibility-panel.show {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .acc-item {
+            background: transparent;
+            border: 1px solid rgba(252, 183, 19, 0.3);
+            color: var(--text);
+            padding: 11px 14px;
+            border-radius: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: left;
+            font-size: 0.92rem;
+        }
+
+        .acc-item:hover,
+        .acc-item.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .acc-title {
+            padding: 8px 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(252, 183, 19, 0.2);
+            margin-bottom: 4px;
+        }
+
+        .font-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 6px 10px;
+            width: 100%;
+        }
+
+        .font-btn {
+            background: rgba(252, 183, 19, 0.2);
+            color: var(--text);
+            border: none;
+            flex: 1;
+            height: 38px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .font-btn:hover {
+            background: var(--primary);
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        .font-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            font-weight: 500;
+        }
 
         /* RESPONSIVO */
         @media (max-width: 992px) {
-            .hero-title { font-size: 3.5rem; }
-            .case-grid { grid-template-columns: 1fr; }
-            .case-img { order: -1; }
-            .section-title { font-size: 2.5rem; }
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .case-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .case-img {
+                order: -1;
+            }
+
+            .section-title {
+                font-size: 2.5rem;
+            }
         }
 
         @media (max-width: 768px) {
-            .hero-title { font-size: 2.8rem; }
-            .hero-subtitle { font-size: 1.2rem; }
-            nav { display: none; }
-            .mobile-menu { display: block; }
-            .hero-cta { flex-direction: column; align-items: center; }
-            .niveis-grid, .robo-grid { grid-template-columns: 1fr; }
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .niveis-grid,
+            .robo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .accessibility-panel {
+                min-width: 260px;
+            }
         }
     </style>
 </head>
@@ -621,19 +833,61 @@
             <div class="user-avatar" id="user-avatar">U</div>
             <span id="user-email">carregando...</span>
         </div>
-        <button class="btn" id="toggle-contrast" aria-label="Alternar alto contraste">
-            Alto Contraste
-        </button>
         <button class="btn" id="logout-btn" onclick="logout()" aria-label="Sair do sistema">
             Sair
         </button>
     </header>
 
+    <!-- MENU DE ACESSIBILIDADE -->
+    <div class="accessibility-menu">
+        <button id="accessibility-toggle" class="btn-accessibility" aria-label="Abrir menu de acessibilidade"
+            aria-expanded="false">
+            <i class="fas fa-universal-access"></i>
+        </button>
+        <div id="accessibility-panel" class="accessibility-panel" aria-hidden="true">
+            <!-- CONTRASTE -->
+            <button class="acc-item" data-action="contrast" aria-label="Alternar alto contraste">
+                <i class="fas fa-adjust"></i> Alto Contraste
+            </button>
+
+            <!-- DALTONISMO -->
+            <div class="acc-title">Modo Daltonismo</div>
+            <button class="acc-item" data-action="protanopia" aria-label="Modo Protanopia">
+                <i class="fas fa-eye"></i> Protanopia
+            </button>
+            <button class="acc-item" data-action="deuteranopia" aria-label="Modo Deuteranopia">
+                <i class="fas fa-eye"></i> Deuteranopia
+            </button>
+            <button class="acc-item" data-action="tritanopia" aria-label="Modo Tritanopia">
+                <i class="fas fa-eye"></i> Tritanopia
+            </button>
+            <button class="acc-item" data-action="color-normal" aria-label="Desativar modo daltonismo">
+                <i class="fas fa-eye-slash"></i> Normal
+            </button>
+
+            <!-- LIBRAS & LEITOR -->
+            <button class="acc-item" data-action="libras" aria-label="Ativar modo LIBRAS">
+                <i class="fas fa-hands-asl-interpreting"></i> LIBRAS
+            </button>
+            <button class="acc-item" data-action="speak" aria-label="Ativar leitor de tela">
+                <i class="fas fa-volume-up"></i> Leitor de Tela
+            </button>
+
+            <!-- FONTE -->
+            <div class="acc-item font-control">
+                <button data-action="font-decrease" aria-label="Diminuir fonte" class="font-btn">A-</button>
+                <span class="font-label">Fonte</span>
+                <button data-action="font-increase" aria-label="Aumentar fonte" class="font-btn">A+</button>
+            </div>
+        </div>
+    </div>
+
     <!-- HERO -->
     <section class="hero" id="home">
         <div class="hero-content" data-aos="fade-up">
             <h1 class="hero-title">Indústria 5.0</h1>
-            <p class="hero-subtitle">Onde máquinas, inteligência artificial e pessoas colaboram em perfeita simbiose para resultados extraordinários.</p>
+            <p class="hero-subtitle">Onde máquinas, inteligência artificial e pessoas colaboram em perfeita simbiose
+                para resultados extraordinários.</p>
             <div class="hero-cta">
                 <button class="btn btn-primary" onclick="irParaDashboard()">
                     Acessar Sistema
@@ -650,8 +904,10 @@
         <div class="container">
             <div class="proposito-content" data-aos="fade-up">
                 <h2 class="section-title">Nosso Propósito</h2>
-                <p><strong>Evoluir a indústria brasileira digitalmente</strong> valorizando o melhor de um sistema autônomo inteligente em conjunto com as máquinas existentes e o que as pessoas têm de melhor.</p>
-                <p>Esta simbiose, também chamada de <strong>Indústria 5.0</strong>, entre máquinas, sistema autônomo e pessoas, gera resultados extraordinários, sustentáveis e humanos.</p>
+                <p><strong>Evoluir a indústria brasileira digitalmente</strong> valorizando o melhor de um sistema
+                    autônomo inteligente em conjunto com as máquinas existentes e o que as pessoas têm de melhor.</p>
+                <p>Esta simbiose, também chamada de <strong>Indústria 5.0</strong>, entre máquinas, sistema autônomo e
+                    pessoas, gera resultados extraordinários, sustentáveis e humanos.</p>
             </div>
         </div>
     </section>
@@ -722,7 +978,8 @@
     <section class="robo-section" id="robo">
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">A Tríade de Robôs</h2>
-            <p style="text-align:center; max-width:900px; margin:0 auto 60px; color:var(--text-light);" data-aos="fade-up">
+            <p style="text-align:center; max-width:900px; margin:0 auto 60px; color:var(--text-light);"
+                data-aos="fade-up">
                 Três robôs simbólicos que representam o sistema completo em ação.
             </p>
             <div class="robo-grid">
@@ -775,10 +1032,13 @@
 
     <!-- SCRIPTS -->
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-    <script src="script.js"></script>
     <script>
         AOS.init({ duration: 1000, once: true });
 
+        new window.VLibras.Widget({
+            rootPath: 'https://vlibras.gov.br/app',
+            position: 'BL'  // Inferior esquerdo; opções: 'TL', 'T', 'TR', 'R', 'BR' (padrão), 'B', 'BL', 'L'
+        });
         // Header scroll
         window.addEventListener('scroll', () => {
             document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
@@ -792,7 +1052,7 @@
             });
         });
 
-        // Usuário
+        // USUÁRIO (100% PRESERVADO)
         document.addEventListener("DOMContentLoaded", () => {
             const email = usuarioLogado();
             if (email) {
@@ -800,19 +1060,12 @@
                 document.getElementById("user-avatar").textContent = email[0].toUpperCase();
             }
 
-            // Contraste
-            const toggle = document.getElementById("toggle-contrast");
-            toggle.addEventListener("click", () => {
-                const isHigh = document.body.getAttribute("data-theme") === "high-contrast";
-                document.body.setAttribute("data-theme", isHigh ? "" : "high-contrast");
-                localStorage.setItem("theme", isHigh ? "normal" : "high-contrast");
-                falar(isHigh ? "Modo normal ativado" : "Alto contraste ativado");
-            });
-
-            if (localStorage.getItem("theme") === "high-contrast") {
-                document.body.setAttribute("data-theme", "high-contrast");
-            }
+            loadAccessibilitySettings();
         });
+
+        function usuarioLogado() {
+            return localStorage.getItem("usuarioLogado") || "usuario@datawake.com";
+        }
 
         function mostrarToast(msg, type = "success") {
             const toast = document.getElementById("toast");
@@ -824,7 +1077,7 @@
         }
 
         function falar(texto) {
-            if ('speechSynthesis' in window) {
+            if ('speechSynthesis' in window && texto) {
                 const utterance = new SpeechSynthesisUtterance(texto);
                 utterance.lang = 'pt-BR';
                 utterance.rate = 0.9;
@@ -837,8 +1090,135 @@
             setTimeout(() => window.location.href = "dashboard.html", 1500);
         }
 
-        
+        function logout() {
+            mostrarToast("Saindo do sistema...");
+            setTimeout(() => {
+                localStorage.clear();
+                window.location.href = "login.html";
+            }, 1500);
+        }
 
+        // MENU DE ACESSIBILIDADE - FINAL E ESTÁVEL
+        const accToggle = document.getElementById('accessibility-toggle');
+        const accPanel = document.getElementById('accessibility-panel');
+
+        accToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const isOpen = accPanel.classList.contains('show');
+            accPanel.classList.toggle('show', !isOpen);
+            accToggle.setAttribute('aria-expanded', !isOpen);
+            falar(isOpen ? "Menu de acessibilidade fechado" : "Menu de acessibilidade aberto");
+        });
+
+        // Fecha ao clicar fora
+        document.addEventListener('click', (e) => {
+            if (!accToggle.contains(e.target) && !accPanel.contains(e.target)) {
+                accPanel.classList.remove('show');
+                accToggle.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Evita fechar ao clicar dentro do painel
+        accPanel.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+        // Ações
+        document.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const action = btn.getAttribute('data-action');
+                handleAccessibility(action);
+
+                // Não feche para modos de daltonismo
+                if (action !== 'protanopia' && action !== 'deuteranopia' && action !== 'tritanopia' && action !== 'color-normal') {
+                    accPanel.classList.remove('show');
+                    accToggle.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+
+        function handleAccessibility(action) {
+            switch (action) {
+                case 'contrast': toggleContrast(); break;
+                case 'protanopia':
+                case 'deuteranopia':
+                case 'tritanopia':
+                case 'color-normal': setColorBlindMode(action); break;
+                case 'libras': toggleLibras(); break;
+                case 'speak': toggleSpeech(); break;
+                case 'font-increase': changeFontSize(1); break;
+                case 'font-decrease': changeFontSize(-1); break;
+            }
+        }
+
+        function toggleContrast() {
+            const isHigh = document.body.getAttribute("data-theme") === "high-contrast";
+            document.body.setAttribute("data-theme", isHigh ? "" : "high-contrast");
+            localStorage.setItem("theme", isHigh ? "normal" : "high-contrast");
+            falar(isHigh ? "Alto contraste desativado" : "Alto contraste ativado");
+            updateActive('contrast', !isHigh);
+        }
+
+        function setColorBlindMode(mode) {
+            const newMode = mode === "color-normal" ? "" : mode;
+            document.body.setAttribute("data-colorblind", newMode);
+            localStorage.setItem("colorblind", newMode || "normal");
+            document.querySelectorAll('[data-action^="protanopia"], [data-action^="deuteranopia"], [data-action^="tritanopia"], [data-action="color-normal"]')
+                .forEach(b => b.classList.remove('active'));
+            document.querySelector(`[data-action="${mode}"]`).classList.add('active');
+            falar(`Modo ${mode === 'color-normal' ? 'normal' : mode} ativado`);
+        }
+
+        let librasActive = false;
+        function toggleLibras() {
+            librasActive = !librasActive;
+            const widget = window.VLibras?.Widget?.getInstance();
+            if (widget) widget.toggle();
+            updateActive('libras', librasActive);
+            falar(librasActive ? "LIBRAS ativado" : "LIBRAS desativado");
+        }
+
+        let speechActive = false;
+        function toggleSpeech() {
+            speechActive = !speechActive;
+            if (speechActive) falar("Leitor de tela ativado");
+            else { speechSynthesis.cancel(); falar("Leitor de tela desativado"); }
+            updateActive('speak', speechActive);
+        }
+
+        function changeFontSize(delta) {
+            let size = parseInt(localStorage.getItem('fontSize') || 16);
+            size = Math.min(Math.max(size + delta, 14), 28);
+            document.documentElement.style.setProperty('--base-font-size', size + 'px');
+            localStorage.setItem('fontSize', size);
+            falar(`Fonte: ${size} pixels`);
+        }
+
+        function updateActive(action, active) {
+            const btn = document.querySelector(`[data-action="${action}"]`);
+            if (btn) btn.classList.toggle('active', active);
+        }
+
+        function loadAccessibilitySettings() {
+            const theme = localStorage.getItem("theme");
+            if (theme === "high-contrast") {
+                document.body.setAttribute("data-theme", "high-contrast");
+                updateActive('contrast', true);
+            }
+
+            const fontSize = localStorage.getItem('fontSize');
+            if (fontSize) document.documentElement.style.setProperty('--base-font-size', fontSize + 'px');
+
+            const colorblind = localStorage.getItem("colorblind");
+            if (colorblind && colorblind !== "normal") {
+                document.body.setAttribute("data-colorblind", colorblind);
+                updateActive(colorblind, true);
+            } else {
+                updateActive('color-normal', true);
+            }
+        }
     </script>
 </body>
 
